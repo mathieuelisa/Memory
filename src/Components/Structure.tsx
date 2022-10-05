@@ -10,7 +10,6 @@ import image7 from "../images/www.png";
 import image8 from "../images/youtube.png";
 
 function Structure() {
-
     const cards = [
         {id: 1, name:'phone', src: image1 },
         {id: 2, name:'facebook', src: image2 },
@@ -22,6 +21,7 @@ function Structure() {
         {id: 8, name:'whatsapp', src: image8},
     ]
 
+// I made two arrays in one to get 16 cases...
 const doubleCardsArray = [...cards, ...cards]
 
 const handleClick = (id:any) =>{
@@ -32,10 +32,14 @@ const handleClick = (id:any) =>{
     <div className='structure__container'>
         {doubleCardsArray.map((card, index) => {
 
+
             return(
-                // <Card />
-                <div className="structure__card" onClick={()=>handleClick(index)}>
-                    <img src={card.src} className="image" alt="img"/>
+                <div className='second__container flip'> 
+                    <div className="structure__card" onClick={()=>handleClick(index)}>
+                        <img src={card.src} className="image" alt="img"/>
+                    </div>
+
+                    <div className='back__card'></div>
                 </div>
             )
         } )}
