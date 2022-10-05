@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import '../App.scss';
 // import Card from './Card';
 import image1 from "../images/email.png";
@@ -21,21 +22,41 @@ function Structure() {
         {id: 8, name:'whatsapp', src: image8},
     ]
 
+const [flipCard, setFlipCard] = useState<any[]>([])
+
+console.log('my flipcard: ', flipCard)
 // I made two arrays in one to get 16 cases...
 const doubleCardsArray = [...cards, ...cards]
 
+useEffect(()=>{
+    let firstTry = doubleCardsArray[flipCard[0]];
+    let secondTry = doubleCardsArray[flipCard[1]]
+
+    console.log('premiere manche', firstTry)
+    console.log('seconde manche', secondTry)
+},[flipCard, doubleCardsArray])
+
 const handleClick = (id:any) =>{
     console.log("mon id: ", id)
+    // I put each ID card i clicked in my array...
+    setFlipCard((card) => [...card, id])
 }
 
   return (
     <div className='structure__container'>
         {doubleCardsArray.map((card, index) => {
 
+        let clicked;
+        clicked = true;
+
+        // If the array flipCard get the ID pass it in false
+        if(flipCard.includes(index)) {
+            clicked = false;
+        }
 
             return(
-                <div className='second__container flip'> 
-                    <div className="structure__card" onClick={()=>handleClick(index)}>
+                <div className={`second__container ${clicked ? 'flip' : ''} `} onClick={()=>handleClick(index)}> 
+                    <div className="structure__card">
                         <img src={card.src} className="image" alt="img"/>
                     </div>
 
