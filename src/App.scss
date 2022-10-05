@@ -32,9 +32,22 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   gap: 10px;
+  background-color: gray;
+  padding: 30px 130px;
+  width: 940px;
+  margin: 0 auto;
 }
 
 .structure__card{
-  height: 120px;
-  width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 135px;
+  background-color: rgb(53, 52, 52);
+  cursor: pointer;
+}
+
+
+.image{
+  height: 50%;
 }
