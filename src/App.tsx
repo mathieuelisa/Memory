@@ -1,9 +1,12 @@
-import './App.css';
+import './App.scss';
+import Structure from './Components/Structure';
 
 function App() {
   return (
-    <div className="App">
-      <p>coucou</p>
+    <div className="mainContainer">
+        <div className='mainContainer-title'>MEMORY GAME</div>
+
+        <Structure/>
     </div>
   );
 }

@@ -1,0 +1,40 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// FONTS
+@font-face {
+  font-family: "Poppins-Regular";
+  src: url("/fonts/Poppins-Regular.ttf")
+      format("ttf");
+}
+
+//APP
+.mainContainer{
+  background-color: grey;
+  height: 100vh;
+
+  &-title{
+    display: flex;
+    justify-content: center;
+    font-family: "Poppins-Regular";
+    font-size: 30px;
+    padding-top: 40px;
+  }
+}
+
+
+//STRUCTURE
+.structure__container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.structure__card{
+  height: 120px;
+  width: 120px;
+}
