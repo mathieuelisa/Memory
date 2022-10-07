@@ -9,9 +9,13 @@ import image5 from "../images/phone.png";
 import image6 from "../images/whatsapp.png";
 import image7 from "../images/www.png";
 import image8 from "../images/youtube.png";
+import Card from './Card';
 
 function Structure() {
-    const cards = [
+
+    let cards: any;
+
+    cards = [
         {id: 1, name:'phone', src: image1 },
         {id: 2, name:'facebook', src: image2 },
         {id: 3, name:'email', src: image3},
@@ -22,49 +26,49 @@ function Structure() {
         {id: 8, name:'whatsapp', src: image8},
     ]
 
-const [flipCard, setFlipCard] = useState<any[]>([])
+const [flipCard, setFlipCard] = useState<number>(0)
+const [matched, setMatched] = useState<any[]>([])
+const [mixedCard, setMixedCard] = useState<any[]>([])
 
-console.log('my flipcard: ', flipCard)
 // I made two arrays in one to get 16 cases...
 const doubleCardsArray = [...cards, ...cards]
 
-useEffect(()=>{
-    let firstTry = doubleCardsArray[flipCard[0]];
-    let secondTry = doubleCardsArray[flipCard[1]]
+// useEffect(()=>{
 
-    console.log('premiere manche', firstTry)
-    console.log('seconde manche', secondTry)
-},[flipCard, doubleCardsArray])
+//     if(secondTry && firstTry?.id === secondTry?.id){
+//         setMatched([...matched, firstTry?.id])
+//     }
 
-const handleClick = (id:any) =>{
-    console.log("mon id: ", id)
+//     if(flipCard.length === 2) setTimeout(()=>setFlipCard([]), 800)
+
+// },[flipCard, matched])
+
+const handleClick = (id:number) =>{
     // I put each ID card i clicked in my array...
-    setFlipCard((card) => [...card, id])
+    // setFlipCard((cards) => [...cards, id])
+
+    console.log(id)
 }
 
+const mixCard = () =>{
+    const mixCard = doubleCardsArray.sort(()=>Math.random() - 0.5).map((card) => ({...card, id: Math.random()}))
+
+    setMixedCard(mixCard)
+    setFlipCard(0)
+} 
+
+console.log(mixedCard)
   return (
     <div className='structure__container'>
-        {doubleCardsArray.map((card, index) => {
-
-        let clicked;
-        clicked = true;
-
-        // If the array flipCard get the ID pass it in false
-        if(flipCard.includes(index)) {
-            clicked = false;
-        }
-
-            return(
-                <div className={`second__container ${clicked ? 'flip' : ''} `} onClick={()=>handleClick(index)}> 
-                    <div className="structure__card">
-                        <img src={card.src} className="image" alt="img"/>
-                    </div>
-
-                    <div className='back__card'></div>
-                </div>
-            )
-        } )}
+        {mixedCard.map((card) => (
+                    <>
+                        <Card card={card} key={card.id}/>
+                    </>
+        ))
+    }
+    <button onClick={()=>mixCard()}>Play</button>
     </div>
+
   );
 }
 
