@@ -26,29 +26,18 @@ function Structure() {
         {id: 8, name:'whatsapp', src: image8},
     ]
 
+// The card we flip
 const [flipCard, setFlipCard] = useState<number>(0)
 const [matched, setMatched] = useState<any[]>([])
+// The mixed card
 const [mixedCard, setMixedCard] = useState<any[]>([])
+
+// The two try 
+const [firstTry, setFirstTry] = useState<any>()
+const [secondTry, setSecondTry] = useState<any>()
 
 // I made two arrays in one to get 16 cases...
 const doubleCardsArray = [...cards, ...cards]
-
-// useEffect(()=>{
-
-//     if(secondTry && firstTry?.id === secondTry?.id){
-//         setMatched([...matched, firstTry?.id])
-//     }
-
-//     if(flipCard.length === 2) setTimeout(()=>setFlipCard([]), 800)
-
-// },[flipCard, matched])
-
-const handleClick = (id:number) =>{
-    // I put each ID card i clicked in my array...
-    // setFlipCard((cards) => [...cards, id])
-
-    console.log(id)
-}
 
 const mixCard = () =>{
     const mixCard = doubleCardsArray.sort(()=>Math.random() - 0.5).map((card) => ({...card, id: Math.random()}))
@@ -57,13 +46,38 @@ const mixCard = () =>{
     setFlipCard(0)
 } 
 
-console.log(mixedCard)
+const handleChoice = (flipCard: any) => {
+    console.log(flipCard)
+
+    // If the value have been select for first time we update the second try else the first one
+    if(firstTry) {
+        setSecondTry(flipCard)
+    } else {
+        setFirstTry(flipCard)
+    }
+}
+
+useEffect(()=>{
+    if(firstTry && secondTry){
+        if(firstTry.name === secondTry.name){
+            console.log("ca matched")
+            // We put variables at 0 for retry
+            setFirstTry(null)
+            setSecondTry(null)
+        } else {
+            console.log("ca matched passsss")
+            setFirstTry(null)
+            setSecondTry(null)
+        }
+    }
+},[secondTry, firstTry])
+
   return (
     <div className='structure__container'>
         {mixedCard.map((card) => (
-                    <>
-                        <Card card={card} key={card.id}/>
-                    </>
+            <>
+                <Card card={card} key={card.id} handleChoice={handleChoice}/>
+            </>
         ))
     }
     <button onClick={()=>mixCard()}>Play</button>
