@@ -13,7 +13,11 @@
 
 //APP
 .mainContainer{
+  display: flex;
   background-color: grey;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   &-title{
     display: flex;
@@ -34,6 +38,7 @@
   background-color: gray;
   padding: 30px 130px;
   width: 940px;
+  height: 100vh;
   margin: 0 auto;
 }
 
@@ -76,4 +81,15 @@
 
 .flip{
   transform: rotateX(180deg);
+}
+
+.button-play{
+  width: 150px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: transparent;
+  text-transform: uppercase;
+  font-family: "Poppins-Regular";
+  margin-top: 30px;
+  cursor: pointer;
 }

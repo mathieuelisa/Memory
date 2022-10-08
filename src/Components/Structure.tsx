@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+
 import '../App.scss';
-// import Card from './Card';
+
 import image1 from "../images/email.png";
 import image2 from "../images/facebook.png";
 import image3 from "../images/instagram.png";
@@ -9,15 +10,17 @@ import image5 from "../images/phone.png";
 import image6 from "../images/whatsapp.png";
 import image7 from "../images/www.png";
 import image8 from "../images/youtube.png";
+
+// Components
 import Card from './Card';
+import ProgressBar from './ProgressBar';
 
 function Structure() {
-
     let cards: any;
 
     cards = [
-        {id: 1, name:'phone', src: image1, matched: false },
-        {id: 2, name:'facebook', src: image2, matched: false },
+        {id: 1, name:'phone', src: image1, matched: false},
+        {id: 2, name:'facebook', src: image2, matched: false},
         {id: 3, name:'email', src: image3, matched: false},
         {id: 4, name:'instagram', src: image4, matched: false},
         {id: 5, name:'www', src: image5, matched: false},
@@ -26,15 +29,15 @@ function Structure() {
         {id: 8, name:'whatsapp', src: image8, matched: false},
     ]
 
-// The card we flip
-const [flipCard, setFlipCard] = useState<any>(0);
-
 // The mixed card
-const [mixedCard, setMixedCard] = useState<any[]>([]);
+const [mixedCard, setMixedCard] = useState<{ id: number, name: string, src: string, matched: boolean }[]>([]);
 
 // The two try 
 const [firstTry, setFirstTry] = useState<any>();
 const [secondTry, setSecondTry] = useState<any>();
+
+// ProgressBar
+const [valueProgressBar, setValueProgressBar] = useState<number>(0)
 
 // I made two arrays in one to get 16 cases...
 const doubleCardsArray = [...cards, ...cards]
@@ -43,7 +46,20 @@ const mixCard = () =>{
     const mixCard = doubleCardsArray.sort(()=>Math.random() - 0.5).map((card) => ({...card, id: Math.random()}))
 
     setMixedCard(mixCard)
-    setFlipCard(0)
+
+    // Progress bar with 100sec
+    setInterval(() => {
+      const progress: any = setValueProgressBar((oldValue: any) => {
+          const newValue = oldValue + 1 
+
+          if (newValue === 100) {
+                alert("Game over")
+                clearInterval(progress)
+            } else {
+                return newValue
+            }
+        })
+    }, 1000)
 } 
 
 const handleChoice = (flipCard: any) => {
@@ -69,7 +85,7 @@ useEffect(()=>{
                     }
                 })
             }) 
-            // We put variables at 0 for retry
+
             setFirstTry(null)
             setSecondTry(null)
         } else {
@@ -82,26 +98,26 @@ useEffect(()=>{
     }
 },[secondTry, firstTry])
 
-console.log('firstTry', firstTry);
-
   return (
-    <div className='structure__container'>
-        {mixedCard.map((card) => {
-           return (  
+    <> 
+        <button onClick={()=>mixCard()} className="button-play">Play</button>
+            <ProgressBar valueProgressBar={valueProgressBar} />
+        <div className='structure__container'>
+            {mixedCard.map((card) => {
+                return (  
                     <>
-                        <Card 
-                            card={card} 
-                            key={card.id} 
-                            handleChoice={handleChoice}
-                            switchFace={card === firstTry || card ===secondTry || card.matched}
-                        />
-                    </> 
-                )
-            })
-    }
-    <button onClick={()=>mixCard()}>Play</button>
-    </div>
-
+                            <Card 
+                                card={card} 
+                                key={card.id} 
+                                handleChoice={handleChoice}
+                                switchFace={card === firstTry || card ===secondTry || card.matched}
+                            />
+                        </> 
+                    )
+                })
+            }
+        </div>
+    </>
   );
 }
 
