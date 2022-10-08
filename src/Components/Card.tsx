@@ -3,6 +3,7 @@ import '../App.scss';
 interface Props {
   card: any;
   handleChoice: any;
+  switchFace: boolean;
 }
 
 function Card(props: Props) {
@@ -13,8 +14,8 @@ function Card(props: Props) {
 
   return (
       <> 
-      <div className={`second__container ${true ? 'flip' : ''} `}> 
-        <div className="structure__card">
+      <div className={`second__container ${props.switchFace ? 'flip' : ''} `}> 
+        <div className="structure__card" >
           <img src={props.card.src} className="image" alt="img"/>
         </div>
 

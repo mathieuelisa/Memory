@@ -16,25 +16,25 @@ function Structure() {
     let cards: any;
 
     cards = [
-        {id: 1, name:'phone', src: image1 },
-        {id: 2, name:'facebook', src: image2 },
-        {id: 3, name:'email', src: image3},
-        {id: 4, name:'instagram', src: image4},
-        {id: 5, name:'www', src: image5},
-        {id: 6, name:'youtube', src: image6},
-        {id: 7, name:'menu', src: image7},
-        {id: 8, name:'whatsapp', src: image8},
+        {id: 1, name:'phone', src: image1, matched: false },
+        {id: 2, name:'facebook', src: image2, matched: false },
+        {id: 3, name:'email', src: image3, matched: false},
+        {id: 4, name:'instagram', src: image4, matched: false},
+        {id: 5, name:'www', src: image5, matched: false},
+        {id: 6, name:'youtube', src: image6, matched: false},
+        {id: 7, name:'menu', src: image7, matched: false},
+        {id: 8, name:'whatsapp', src: image8, matched: false},
     ]
 
 // The card we flip
-const [flipCard, setFlipCard] = useState<number>(0)
-const [matched, setMatched] = useState<any[]>([])
+const [flipCard, setFlipCard] = useState<any>(0);
+
 // The mixed card
-const [mixedCard, setMixedCard] = useState<any[]>([])
+const [mixedCard, setMixedCard] = useState<any[]>([]);
 
 // The two try 
-const [firstTry, setFirstTry] = useState<any>()
-const [secondTry, setSecondTry] = useState<any>()
+const [firstTry, setFirstTry] = useState<any>();
+const [secondTry, setSecondTry] = useState<any>();
 
 // I made two arrays in one to get 16 cases...
 const doubleCardsArray = [...cards, ...cards]
@@ -47,8 +47,6 @@ const mixCard = () =>{
 } 
 
 const handleChoice = (flipCard: any) => {
-    console.log(flipCard)
-
     // If the value have been select for first time we update the second try else the first one
     if(firstTry) {
         setSecondTry(flipCard)
@@ -59,26 +57,47 @@ const handleChoice = (flipCard: any) => {
 
 useEffect(()=>{
     if(firstTry && secondTry){
+
         if(firstTry.name === secondTry.name){
-            console.log("ca matched")
+            console.log("ca match")
+            setMixedCard(prevCard => {
+                return prevCard.map(cards =>{
+                    if (cards.src === firstTry.src){
+                        return {...cards, matched: true}
+                    } else {
+                        return cards
+                    }
+                })
+            }) 
             // We put variables at 0 for retry
             setFirstTry(null)
             setSecondTry(null)
         } else {
             console.log("ca matched passsss")
-            setFirstTry(null)
-            setSecondTry(null)
+            setTimeout(()=>{
+                setFirstTry(null)
+                setSecondTry(null)
+            }, 1000)
         }
     }
 },[secondTry, firstTry])
 
+console.log('firstTry', firstTry);
+
   return (
     <div className='structure__container'>
-        {mixedCard.map((card) => (
-            <>
-                <Card card={card} key={card.id} handleChoice={handleChoice}/>
-            </>
-        ))
+        {mixedCard.map((card) => {
+           return (  
+                    <>
+                        <Card 
+                            card={card} 
+                            key={card.id} 
+                            handleChoice={handleChoice}
+                            switchFace={card === firstTry || card ===secondTry || card.matched}
+                        />
+                    </> 
+                )
+            })
     }
     <button onClick={()=>mixCard()}>Play</button>
     </div>

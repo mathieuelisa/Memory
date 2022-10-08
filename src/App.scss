@@ -57,7 +57,9 @@
   justify-content: center;
   align-items: center;
   border-radius: 3px;
+  transform: rotateY(180deg);
 }
+
 
 .back__card{
   position: absolute;
@@ -65,11 +67,11 @@
   backface-visibility: hidden;
   width: 100%;
   height: 100%;
-  transform: rotateX(180deg);
 }
 
 .image{
   height: 50%;
+  transform: rotate(180deg);
 }
 
 .flip{
