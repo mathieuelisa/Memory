@@ -29,7 +29,7 @@
 }
 
 
-//STRUCTURE
+//STRUCTURE AND CARD
 .structure__container{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -92,4 +92,51 @@
   font-family: "Poppins-Regular";
   margin-top: 30px;
   cursor: pointer;
+}
+
+
+// MODAL
+.modal__container{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal{
+  height: 300px;
+  position: absolute;
+  width: 600px;
+  background-color: r;
+  background-color: rgb(227, 227, 227);
+  z-index: 33;
+  display: flex;
+  top: 90px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 15px;
+
+  &-title{
+    font-size: 42px;
+    margin: 10px 0;
+  }
+
+  &-button{
+    margin: 30px;
+    width: 200px;
+    height: 37px;
+    border-radius: 10px;
+    background-color: rgb(68, 68, 68);
+    border: 0;
+    font-weight: bold;
+    color: whitesmoke;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:hover{
+      background-color: rgb(58, 58, 58);
+      transition: 1s ease-out 100ms
+    }
+  }
 }

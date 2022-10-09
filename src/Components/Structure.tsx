@@ -13,6 +13,7 @@ import image8 from "../images/youtube.png";
 
 // Components
 import Card from './Card';
+import Modal from './Modal';
 import ProgressBar from './ProgressBar';
 
 function Structure() {
@@ -32,14 +33,17 @@ function Structure() {
 // The mixed card
 const [mixedCard, setMixedCard] = useState<{ id: number, name: string, src: string, matched: boolean }[]>([]);
 
-// The two try 
+// The two tries
 const [firstTry, setFirstTry] = useState<any>();
 const [secondTry, setSecondTry] = useState<any>();
+
+// Modal for play again if you lose
+const [modal, setModal] = useState<boolean>(false)
 
 // ProgressBar
 const [valueProgressBar, setValueProgressBar] = useState<number>(0)
 
-// I made two arrays in one to get 16 cases...
+// Two arrays in one to get 16 cases
 const doubleCardsArray = [...cards, ...cards]
 
 const mixCard = () =>{
@@ -52,9 +56,9 @@ const mixCard = () =>{
       const progress: any = setValueProgressBar((oldValue: any) => {
           const newValue = oldValue + 1 
 
-          if (newValue === 100) {
-                alert("Game over")
+          if (newValue === 101) {
                 clearInterval(progress)
+                setModal(true)
             } else {
                 return newValue
             }
@@ -89,7 +93,6 @@ useEffect(()=>{
             setFirstTry(null)
             setSecondTry(null)
         } else {
-            console.log("ca matched passsss")
             setTimeout(()=>{
                 setFirstTry(null)
                 setSecondTry(null)
@@ -100,20 +103,20 @@ useEffect(()=>{
 
   return (
     <> 
-        <button onClick={()=>mixCard()} className="button-play">Play</button>
+        <button onClick={()=>mixCard()} className="button-play">Jouer</button>
             <ProgressBar valueProgressBar={valueProgressBar} />
+        {modal && <Modal/>}
         <div className='structure__container'>
             {mixedCard.map((card) => {
                 return (  
                     <>
-                            <Card 
-                                card={card} 
-                                key={card.id} 
-                                handleChoice={handleChoice}
-                                switchFace={card === firstTry || card ===secondTry || card.matched}
-                            />
-                        </> 
-                    )
+                        <Card 
+                            card={card} 
+                            key={card.id} 
+                            handleChoice={handleChoice}
+                            switchFace={card === firstTry || card ===secondTry || card.matched}
+                        />
+                    </>)
                 })
             }
         </div>

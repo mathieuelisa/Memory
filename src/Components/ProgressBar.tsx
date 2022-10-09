@@ -1,5 +1,9 @@
-const ProgressBar = (props: any) => {
-  const {valueProgressBar} = props
+
+interface Props {
+  valueProgressBar: any;
+}
+
+const ProgressBar = (props: Props) => {
 
   const progressBar__container = {
     width: '380px',
@@ -13,11 +17,11 @@ const ProgressBar = (props: any) => {
       backgroundColor: 'rgb(40, 39, 39)',
       height: '20px',
       borderRadius: '15px',
-      width: `${valueProgressBar}%`,
+      width: `${props.valueProgressBar}%`,
   }
 
   return (
-      <> 
+      <>
         <div style={progressBar__container}>
           <div style={progressBar__inside}></div>
         </div>
